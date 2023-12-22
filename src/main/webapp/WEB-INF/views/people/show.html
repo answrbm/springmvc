@@ -5,10 +5,11 @@
     <title>Person</title>
 </head>
 <body>
-    <p th:text="${person.getId()}"></p>
-    <p>. </p>
-    <p th:text="${person.getName()}"></p>
-    <br>
+    <p>
+        <span th:text="${person.getId()}"></span>
+        <span>.</span>
+        <span th:text="${person.getName()}"></span>
+    </p>
     <a href="/springmvc/people">Main page</a>
 </body>
 </html>
