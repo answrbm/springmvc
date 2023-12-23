@@ -9,6 +9,12 @@
         <span th:text="${person.getId()}"></span>
         <span>.</span>
         <span th:text="${person.getName()}"></span>
+        <span>, </span>
+        <span th:text="${person.getAge()}"></span>
+    </p>
+    <p>
+        <span>Email: </span>
+        <span th:text="${person.getEmail()}"></span>
     </p>
     <a th:href="@{/people/{id}/edit(id=${person.getId()})}">Edit</a>
     <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
