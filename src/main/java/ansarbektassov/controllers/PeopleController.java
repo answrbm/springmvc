@@ -2,7 +2,6 @@ package ansarbektassov.controllers;
 
 import ansarbektassov.dao.PersonDAO;
 import ansarbektassov.models.Person;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,8 +40,8 @@ public class PeopleController {
         if(bindingResult.hasErrors()) {
             return "people/new";
         }
-        personDAO.save(person);
-        return "redirect: /springmvc/people/"+person.getId();
+        int id = personDAO.save(person);
+        return "redirect: /springmvc/people/"+id;
     }
 
     @GetMapping("/{id}/edit")
