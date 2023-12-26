@@ -1,0 +1,3 @@
+With batch update:106
+Without batch update:2704
+With batch update:46
