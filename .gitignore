@@ -37,4 +37,4 @@ build/
 ### Mac OS ###
 .DS_Store
 
-datasource.properties
+src/main/resources/datasource.properties
