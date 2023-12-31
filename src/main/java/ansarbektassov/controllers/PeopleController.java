@@ -40,8 +40,8 @@ public class PeopleController {
         if(bindingResult.hasErrors()) {
             return "people/new";
         }
-        int id = personDAO.save(person);
-        return "redirect: /springmvc/people/"+id;
+        personDAO.save(person);
+        return "redirect: /springmvc/people";
     }
 
     @GetMapping("/{id}/edit")

@@ -1,6 +1,5 @@
 package ansarbektassov.dao;
 
-import ansarbektassov.controllers.BatchController;
 import ansarbektassov.models.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
@@ -8,7 +7,6 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import javax.imageio.IIOException;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -18,9 +16,7 @@ import java.util.List;
 
 @Component
 public class PersonDAO {
-
-    private static int peopleCount;
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
     @Autowired
     public PersonDAO(JdbcTemplate jdbcTemplate) {
@@ -37,11 +33,9 @@ public class PersonDAO {
                 .stream().findAny().orElse(null);
     }
 
-    public int save(Person person) {
-        peopleCount++;
-        jdbcTemplate.update("INSERT INTO person VALUES(?,?,?,?);",
-                peopleCount,person.getName(),person.getAge(),person.getEmail());
-        return peopleCount;
+    public void save(Person person) {
+        jdbcTemplate.update("INSERT INTO person(name,age,email) VALUES(?,?,?);",
+                person.getName(),person.getAge(),person.getEmail());
     }
 
     public void update(int id, Person updatedPerson) {
@@ -61,7 +55,7 @@ public class PersonDAO {
 
         for(Person person : people) {
             jdbcTemplate.update("INSERT INTO person VALUES(?,?,?,?);",
-                    peopleCount,person.getName(),person.getAge(),person.getEmail());
+                    person.getId(),person.getName(),person.getAge(),person.getEmail());
         }
 
         long after = System.currentTimeMillis();
