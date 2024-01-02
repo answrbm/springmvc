@@ -16,6 +16,10 @@
         <span>Email: </span>
         <span th:text="${person.getEmail()}"></span>
     </p>
+    <p>
+        <span>Address: </span>
+        <span th:text="${person.getAddress()}"></span>
+    </p>
     <a th:href="@{/people/{id}/edit(id=${person.getId()})}">Edit</a>
     <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
         <input type="submit" value="Delete"/>
