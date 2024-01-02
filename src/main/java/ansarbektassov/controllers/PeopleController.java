@@ -2,6 +2,7 @@ package ansarbektassov.controllers;
 
 import ansarbektassov.dao.PersonDAO;
 import ansarbektassov.models.Person;
+import ansarbektassov.util.PersonValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,8 @@ public class PeopleController {
 
     @Autowired
     private PersonDAO personDAO;
+    @Autowired
+    private PersonValidator validator;
 
     @GetMapping
     public String index(Model model) {
@@ -37,6 +40,7 @@ public class PeopleController {
 
     @PostMapping
     public String create(@ModelAttribute("person") @Validated Person person, BindingResult bindingResult) {
+        validator.validate(person,bindingResult);
         if(bindingResult.hasErrors()) {
             return "people/new";
         }
@@ -54,6 +58,7 @@ public class PeopleController {
     public String update(@ModelAttribute("person") @Validated Person person,
                          BindingResult bindingResult,
                          @PathVariable("id") int id) {
+        validator.validate(person,bindingResult);
         if(bindingResult.hasErrors()) {
             return "people/edit";
         }
