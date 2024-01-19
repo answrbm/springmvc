@@ -1,7 +1,7 @@
 package ansarbektassov.controllers;
 
-import ansarbektassov.dao.PersonDAO;
 import ansarbektassov.models.Person;
+import ansarbektassov.services.PeopleService;
 import ansarbektassov.util.PersonValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,21 +15,21 @@ import org.springframework.web.bind.annotation.*;
 public class PeopleController {
 
     @Autowired
-    private PersonDAO personDAO;
+    private PeopleService peopleService;
     @Autowired
-    private PersonValidator validator;
+    private PersonValidator peopleValidator;
 
     @GetMapping
     public String index(Model model) {
         //������� ���� ����� �� DAO � ��������� �� ����������� �� �������������
-        model.addAttribute("people",personDAO.index());
+        model.addAttribute("people",peopleService.findAll());
         return "people/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
         //������� ������ �������� �� DAO � ��������� �� ����������� �� �������������
-        model.addAttribute("person",personDAO.show(id));
+        model.addAttribute("person",peopleService.findOne(id));
         return "people/show";
     }
 
@@ -40,17 +40,17 @@ public class PeopleController {
 
     @PostMapping
     public String create(@ModelAttribute("person") @Validated Person person, BindingResult bindingResult) {
-        validator.validate(person,bindingResult);
+        peopleValidator.validate(person,bindingResult);
         if(bindingResult.hasErrors()) {
             return "people/new";
         }
-        personDAO.save(person);
+        peopleService.save(person);
         return "redirect: /springmvc/people";
     }
 
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id) {
-        model.addAttribute("person",personDAO.show(id));
+        model.addAttribute("person",peopleService.findOne(id));
         return "people/edit";
     }
 
@@ -61,13 +61,13 @@ public class PeopleController {
         if(bindingResult.hasErrors()) {
             return "people/edit";
         }
-        personDAO.update(id,person);
+        peopleService.update(id,person);
         return "redirect: /springmvc/people/"+id;
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
-        personDAO.delete(id);
+        peopleService.delete(id);
         return "redirect: /springmvc/people";
     }
 
