@@ -1,30 +1,39 @@
 package ansarbektassov.models;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
+@Entity
+@Table(name = "person")
 public class Person {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
     @NotEmpty(message = "Name must be filled")
     @Size(min = 2, max = 30, message = "Name must be between 2 and 30 characters")
+    @Column(name = "name")
     private String name;
     @Min(value = 10, message = "Age must be equal or greater than 10")
+    @Column(name = "age")
     private int age;
     @NotEmpty(message = "Email must be filled")
     @Email(message = "Email must be valid")
+    @Column(name = "email")
     private String email;
 
     //Country, City, Zip(6 digits)
     //USA, Los Angeles, 123456
     @Pattern(regexp = "[A-Z]\\w+., [A-Z]\\w+.*, \\d{6}",
             message = "Address must match the pattern: 'Country, City, Zip(6 digits)'")
+    @Column(name = "address")
     private String address;
 
     public Person() {
     }
 
-    public Person(int id, String name, int age, String email, String address) {
-        this.id = id;
+    public Person(String name, int age, String email, String address) {
         this.name = name;
         this.age = age;
         this.email = email;
