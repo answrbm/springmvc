@@ -1,6 +1,7 @@
 package ansarbektassov.services;
 
 import ansarbektassov.models.Person;
+import ansarbektassov.models.Status;
 import ansarbektassov.repositories.PeopleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,7 @@ public class PeopleService {
     @Transactional
     public void save(Person personToCreate) {
         personToCreate.setCreatedAt(LocalDateTime.now());
+        personToCreate.setStatus(Status.SINGLE);
         peopleRepository.save(personToCreate);
     }
 

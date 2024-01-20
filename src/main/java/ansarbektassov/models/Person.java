@@ -43,6 +43,9 @@ public class Person {
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime createdAt;
 
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
     public Person() {
     }
 
@@ -107,5 +110,13 @@ public class Person {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }
