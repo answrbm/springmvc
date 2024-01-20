@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "person")
@@ -118,5 +119,34 @@ public class Person {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(this == o) return true;
+        if(o == null || !getClass().equals(o.getClass())) return false;
+
+        Person person = (Person) o;
+        if(id != person.getId()) return false;
+        if(!name.equals(person.getName())) return false;
+        if(age != person.getAge()) return false;
+        if(!email.equals(person.getEmail())) return false;
+        if(!address.equals(person.getAddress())) return false;
+        if(!dateOfBirth.equals(person.getDateOfBirth())) return false;
+        if(!createdAt.equals(person.createdAt)) return false;
+        return status == person.getStatus();
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = result * 31 + (name == null ? 0 : name.hashCode());
+        result = result * 31 + age;
+        result = result * 31 + (email == null ? 0 : email.hashCode());
+        result = result * 31 + (address == null ? 0 : address.hashCode());
+        result = result * 31 + (dateOfBirth == null ? 0 : dateOfBirth.hashCode());
+        result = result * 31 + (createdAt == null ? 0 : createdAt.hashCode());
+        result = result * 31 + (status == null ? 0 : status.hashCode());
+        return result;
     }
 }
